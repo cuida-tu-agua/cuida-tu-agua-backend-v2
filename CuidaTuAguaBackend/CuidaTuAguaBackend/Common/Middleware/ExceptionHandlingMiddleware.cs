@@ -33,6 +33,10 @@ public class ExceptionHandlingMiddleware
         {
             await WriteProblemAsync(context, HttpStatusCode.Conflict, "Conflicto", ex.Message);
         }
+        catch (BadRequestException ex)
+        {
+            await WriteProblemAsync(context, HttpStatusCode.BadRequest, "Solicitud inválida", ex.Message);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error no controlado procesando {Path}", context.Request.Path);

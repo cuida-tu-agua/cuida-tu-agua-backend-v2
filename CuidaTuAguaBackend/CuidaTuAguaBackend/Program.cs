@@ -21,6 +21,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IHogarRepository, HogarRepository>();
 builder.Services.AddScoped<IHogarService, HogarService>();
 
+builder.Services.AddScoped<IConsumoRepository, ConsumoRepository>();
+builder.Services.AddScoped<IConsumoService, ConsumoService>();
+
 // CORS: en desarrollo se permite el origen del frontend (Expo web) desde configuración.
 // Ajustar "Cors:AllowedOrigins" en appsettings según el entorno.
 var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()

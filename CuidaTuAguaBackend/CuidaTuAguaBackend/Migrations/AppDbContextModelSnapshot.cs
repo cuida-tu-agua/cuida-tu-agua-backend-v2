@@ -22,6 +22,33 @@ namespace CuidaTuAguaBackend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CuidaTuAguaBackend.Models.ConsumoAgua", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("FechaHora")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("HogarId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("ValorM3")
+                        .HasColumnType("decimal(12,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HogarId", "FechaHora");
+
+                    b.ToTable("consumos", (string)null);
+                });
+
             modelBuilder.Entity("CuidaTuAguaBackend.Models.Hogar", b =>
                 {
                     b.Property<int>("Id")
@@ -76,6 +103,17 @@ namespace CuidaTuAguaBackend.Migrations
                         .IsUnique();
 
                     b.ToTable("hogares", (string)null);
+                });
+
+            modelBuilder.Entity("CuidaTuAguaBackend.Models.ConsumoAgua", b =>
+                {
+                    b.HasOne("CuidaTuAguaBackend.Models.Hogar", "Hogar")
+                        .WithMany()
+                        .HasForeignKey("HogarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Hogar");
                 });
 #pragma warning restore 612, 618
         }
